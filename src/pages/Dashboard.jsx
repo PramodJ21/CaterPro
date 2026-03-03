@@ -7,7 +7,7 @@ import { formatDate, formatCurrency, getStockStatus } from '../utils/helpers';
 import { PageWrap, StaggerCard, KPICard, Btn, StatusBadge, EmptyState } from '../components/ui';
 import { format, parseISO, subMonths, isAfter, isBefore, addDays } from 'date-fns';
 
-const COLORS = ['#A8B86D', '#1A1A2E', '#4CAF50', '#FF9800', '#E53935', '#2196F3', '#9C27B0'];
+const COLORS = ['#E8B86D', '#1A1A2E', '#4CAF50', '#FF9800', '#E53935', '#2196F3', '#9C27B0'];
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -100,7 +100,7 @@ export default function Dashboard() {
     return (
         <PageWrap>
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboardssssss</h1>
+                <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
                 <p className="text-sm text-[#7A7A7A]">Welcome to CaterPro — your catering operations overview</p>
             </div>
 
