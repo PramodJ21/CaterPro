@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #1A1A2E;
+  --color-navy-light: #25254a;
+  --color-gold: #E8B86D;
+  --color-gold-light: #f0cf95;
+  --color-gold-dark: #c99a4e;
+  --color-surface: #F7F3EE;
+  --color-card: #FFFFFF;
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-danger: #E53935;
+  --color-text-dark: #2D2D2D;
+  --color-text-muted: #7A7A7A;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Base body */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-text-dark);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c4c4c4; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white; }
+}
+
+.print-only { display: none; }
+
+/* Star rating */
+.star-btn { cursor: pointer; transition: transform 0.15s; }
+.star-btn:hover { transform: scale(1.2); }
+
+/* Animated counter */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
