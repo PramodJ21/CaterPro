@@ -4,7 +4,7 @@ import { formatCurrency, WORKER_ROLES } from '../utils/helpers';
 import { Modal, EmptyState, FAB, Btn, Field, Input, Select, StatusBadge, StaggerCard, Notification, useOnlineStatus } from '../components/ui';
 import { Users, Plus, Edit, Trash2 } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 const STATUSES = ['Present', 'Absent', 'Half-Day'];
 const COLORS = ['#4CAF50', '#E53935', '#FF9800'];
