@@ -1,19 +1,27 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { getData, KEYS } from '../utils/storage';
 import { formatDate, formatCurrency } from '../utils/helpers';
-import { Btn, StarRating } from '../components/ui';
+import { Btn, StarRating, Notification, useOnlineStatus } from '../components/ui';
 import { Printer, Download } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { AnimatePresence } from 'framer-motion';
 
 export default function ReportTab({ event }) {
+    const isOnline = useOnlineStatus();
     const reportRef = useRef();
     const [loading, setLoading] = useState(true);
+    const [generating, setGenerating] = useState(false);
+    const [notification, setNotification] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [procurement, setProcurement] = useState([]);
     const [attendance, setAttendance] = useState([]);
     const [moms, setMoms] = useState([]);
     const [feedback, setFeedback] = useState([]);
+
+    const showMsg = (message, type = 'success') => {
+        setNotification({ message, type });
+    };
 
     useEffect(() => {
         Promise.all([
@@ -43,19 +51,39 @@ export default function ReportTab({ event }) {
     const handlePDF = async () => {
         const el = reportRef.current;
         if (!el) return;
-        const canvas = await html2canvas(el, { scale: 2, useCORS: true });
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfW = pdf.internal.pageSize.getWidth();
-        const pdfH = (canvas.height * pdfW) / canvas.width;
-        let pos = 0;
-        const pageH = pdf.internal.pageSize.getHeight();
-        while (pos < pdfH) {
-            if (pos > 0) pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, -pos, pdfW, pdfH);
-            pos += pageH;
+
+        try {
+            setGenerating(true);
+            showMsg('Generating PDF...', 'info');
+
+            const canvas = await html2canvas(el, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                allowTaint: true
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfW = pdf.internal.pageSize.getWidth();
+            const pdfH = (canvas.height * pdfW) / canvas.width;
+            let pos = 0;
+            const pageH = pdf.internal.pageSize.getHeight();
+
+            while (pos < pdfH) {
+                if (pos > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, -pos, pdfW, pdfH);
+                pos += pageH;
+            }
+
+            pdf.save(`CaterPro_Report_${event.name.replace(/\s+/g, '_')}.pdf`);
+            showMsg('PDF Downloaded successfully');
+        } catch (err) {
+            console.error('PDF Generation Error:', err);
+            showMsg('Failed to generate PDF. Please try again.', 'error');
+        } finally {
+            setGenerating(false);
         }
-        pdf.save(`CaterPro_Report_${event.name.replace(/\s+/g, '_')}.pdf`);
     };
 
     const Section = ({ title, children }) => (
@@ -77,7 +105,7 @@ export default function ReportTab({ event }) {
         <>
             <div className="flex gap-3 mb-6 no-print">
                 <Btn onClick={handlePrint}><Printer size={16} /> Print Report</Btn>
-                <Btn variant="secondary" onClick={handlePDF}><Download size={16} /> Download PDF</Btn>
+                <Btn variant="secondary" onClick={handlePDF} loading={generating} loadingText="Generating..."><Download size={16} /> Download PDF</Btn>
             </div>
 
             <div ref={reportRef} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-8 max-w-4xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -104,7 +132,7 @@ export default function ReportTab({ event }) {
                     <Section title="Menu Summary">
                         <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
                             <table className="w-full text-[10px] sm:text-sm border-collapse min-w-[500px] sm:min-w-0">
-                                <thead><tr className="text-[#细细] text-[10px] uppercase border-b">
+                                <thead><tr className="text-[#7A7A7A] text-[10px] uppercase border-b">
                                     <th className="text-left py-2">Dish</th><th className="py-2">Category</th><th className="py-2 text-right">Yield</th><th className="py-2 text-right">Portions</th><th className="py-2 text-right">Leftover%</th>
                                 </tr></thead>
                                 <tbody>
@@ -188,6 +216,16 @@ export default function ReportTab({ event }) {
                     </div>
                 </Section>
             </div>
+
+            <AnimatePresence>
+                {notification && (
+                    <Notification
+                        message={notification.message}
+                        type={notification.type}
+                        onClose={() => setNotification(null)}
+                    />
+                )}
+            </AnimatePresence>
         </>
     );
 }

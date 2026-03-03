@@ -3,6 +3,7 @@ import { getData, upsertRecord, deleteRecord, KEYS, generateId } from '../utils/
 import { Modal, EmptyState, FAB, Btn, Field, Input, Select, Textarea, StarRating, StaggerCard, Notification, useOnlineStatus } from '../components/ui';
 import { MessageSquare, Plus, Edit, Trash2 } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function FeedbackTab({ event }) {
     const isOnline = useOnlineStatus();

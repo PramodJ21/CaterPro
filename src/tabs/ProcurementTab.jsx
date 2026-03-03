@@ -4,6 +4,7 @@ import { formatDate, formatCurrency, PAYMENT_STATUSES, PROCUREMENT_CATEGORIES } 
 import { Modal, EmptyState, FAB, Btn, Field, Input, Select, Textarea, StatusBadge, StaggerCard, Notification, useOnlineStatus } from '../components/ui';
 import { ShoppingCart, Plus, Edit, Trash2, Paperclip, FileText } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const emptyEntry = { vendorName: '', vendorContact: '', itemName: '', quantity: '', unit: 'kg', unitPrice: '', totalCost: 0, purchaseDate: '', receivedDate: '', paymentStatus: 'Pending', invoiceNumber: '', notes: '', category: '', invoiceFile: null, invoiceFileName: '' };
 
