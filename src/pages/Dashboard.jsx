@@ -100,7 +100,7 @@ export default function Dashboard() {
     return (
         <PageWrap>
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboardssssss</h1>
                 <p className="text-sm text-[#7A7A7A]">Welcome to CaterPro — your catering operations overview</p>
             </div>
 
