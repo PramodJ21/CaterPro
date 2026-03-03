@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { getData, upsertRecord, deleteRecord, KEYS, generateId } from '../utils/storage';
 import { Modal, EmptyState, FAB, Btn, Field, Input, Select, Textarea, StarRating, StaggerCard, Notification, useOnlineStatus } from '../components/ui';
 import { MessageSquare, Plus, Edit, Trash2 } from 'lucide-react';

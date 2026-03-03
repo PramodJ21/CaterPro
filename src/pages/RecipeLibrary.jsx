@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { getData, upsertRecord, KEYS } from '../utils/storage';
 import { formatCurrency, CATEGORIES } from '../utils/helpers';
 import { PageWrap, StaggerCard, Modal, EmptyState, Btn, Field, Input, Select, Textarea, SearchBar, Notification, useOnlineStatus } from '../components/ui';
