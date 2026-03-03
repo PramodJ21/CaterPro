@@ -7,7 +7,7 @@ import { formatDate, formatCurrency, getStockStatus } from '../utils/helpers';
 import { PageWrap, StaggerCard, KPICard, Btn, StatusBadge, EmptyState } from '../components/ui';
 import { format, parseISO, subMonths, isAfter, isBefore, addDays } from 'date-fns';
 
-const COLORS = ['#E8B86D', '#1A1A2E', '#4CAF50', '#FF9800', '#E53935', '#2196F3', '#9C27B0'];
+const COLORS = ['#A8B86D', '#1A1A2E', '#4CAF50', '#FF9800', '#E53935', '#2196F3', '#9C27B0'];
 
 export default function Dashboard() {
     const navigate = useNavigate();
